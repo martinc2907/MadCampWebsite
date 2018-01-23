@@ -14,17 +14,17 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-redis_host = os.environ.get('REDIS_HOST','localhost')
+# redis_host = os.environ.get('REDIS_HOST','localhost')
 
-CHANNEL_LAYERS = {
-    "default":{
-        "BACKEND": "asgi_redis.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [(redis_host, 6379)],
-        },
-        "ROUTING": "app.routing.channel_routing",
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default":{
+#         "BACKEND": "asgi_redis.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [(redis_host, 6379)],
+#         },
+#         "ROUTING": "app.routing.channel_routing",
+#     },
+# }
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -41,7 +41,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'channels',
     'app.apps.AppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
