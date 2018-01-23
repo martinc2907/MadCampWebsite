@@ -1,0 +1,8 @@
+<form action = "" method = "post">
+	{% csrf_token %}	<!-- For security. Look into later. -->
+	{% for field in form %}
+		<label>{{ field.label_tag}}</label>
+		<div>{{field}}</div>
+	{% endfor %}
+	<button>Submit</button>
+</form>	

@@ -1,0 +1,97 @@
+{% load static %}
+
+<link rel = "stylesheet" type = "text/css" href = "{% static 'app/style.css' %}" />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+
+{% include "menu.html" with active_tab='A' %}
+<button class = "profile_button" onclick = "document.getElementById('id1').style.display='block'">Add Profile</button>
+
+<div id = "id1" class = "modal ">
+	<form style="width:30%; margin: 5% auto 15% auto;" method= "post" action = "{% url 'people' %}">{% csrf_token %}
+		<div class = "modal_container">
+			<label><b>Name</b></label>
+			<input class = "input1" type = "text" placeholder = "Enter Name" name = "name"/>
+
+			<label><b>School</b></label>
+			<input class = "input1" type = "text" placeholder = "Enter School Name" name = "school"/>
+
+			<label><b>Github</b></label>
+			<input class = "input1" type = "text" placeholder = "Enter Your Github Link" name = "github"/>
+
+			<label><b>Specialty</b></label>
+			<input class = "input1" type = "text" placeholder = "What are you good at?" name = "specialty"/>
+
+			<label><b>Session</b></label>
+			<input class = "input1" type = "text" placeholder = "When did you participate?" name = "session"/>
+
+			<label><b>Profile Picture</b></label>
+			<input class = "input1" type = "text" placeholder = "Enter url" name = "url"/>
+
+			<label><b>Quote</b></label>
+			<textarea class = "input1" rows = "3" placeholder = "Enter a short quote/testimonial about the camp" name = "quote"></textarea>
+			<button type = "submit">Submit</button>
+		</div>
+  	</form>
+ </div>
+
+
+<!-- WINTER 2017 -->
+<h1 class = "about_header" style = "margin-top:0px">2017 Winter</h1>
+{% if w2017 is not None%}
+	<div class = "card_col">
+		{% for profile in w2017 %}
+			<div class = "card">
+				<img class = "img" src = {{profile.url}} alt = "Avatar">
+				<div class = "profile_text">
+					<h4><b>{{profile.name}}</b></h4>
+					<p>{{profile.quote}} </p>
+				</div>
+			</div>	
+		{% endfor %}
+	</div>
+{% endif %}
+
+<!-- SUMMER 2017 -->
+<h1 class = "about_header">2017 Summer</h1>
+{% if s2017 is not None %}
+	<div class = "card_col">
+		{% for profile in s2017 %}
+			<div class = "card">
+				<img class = "img" src = "{{profile.url}}" alt = "Avatar">
+				<div class = "profile_text">
+					<h4><b>{{profile.name}}</b></h4>
+					<p>{{profile.quote}} </p>
+				</div>
+			</div>	
+		{% endfor %}
+	</div>
+{% endif %}
+
+
+<!-- WINTER 2016-->
+<h1 class = "about_header">2016 Winter</h1>
+{% if w2016 is not None %}
+	<div class = "card_col">
+		{% for profile in w2016 %}
+			<div class = "card">
+				<img class = "img" src = "{{profile.url}}" alt = "Avatar">
+				<div class = "profile_text">
+					<h4><b>{{profile.name}}</b></h4>
+					<p>{{profile.quote}} </p>
+				</div>
+			</div>	
+		{% endfor %}
+	</div>
+{% endif %}
+
+<script>
+	var modal = document.getElementById('id1');
+	window.onclick = function(event){
+		if(event.target == modal){
+			modal.style.display= 'none';}
+	}
+</script>
