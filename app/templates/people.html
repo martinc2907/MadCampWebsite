@@ -11,7 +11,7 @@
 <button class = "profile_button" onclick = "document.getElementById('id1').style.display='block'">Add Profile</button>
 
 <div id = "id1" class = "modal ">
-	<form style="width:30%; margin: 5% auto 15% auto;" method= "post" action = "{% url 'people' %}">{% csrf_token %}
+	<form style="width:30%; margin: 5% auto 15% auto;" method= "post" action = "{% url 'people' %}" enctype = "multipart/form-data">{% csrf_token %}
 		<div class = "modal_container">
 			<label><b>Name</b></label>
 			<input class = "input1" type = "text" placeholder = "Enter Name" name = "name"/>
@@ -30,6 +30,9 @@
 
 			<label><b>Profile Picture</b></label>
 			<input class = "input1" type = "text" placeholder = "Enter url" name = "url"/>
+
+			<strong>Upload file:</strong>
+			<input class = "input1" type = "file" name = "filea"/>
 
 			<label><b>Quote</b></label>
 			<textarea class = "input1" rows = "3" placeholder = "Enter a short quote/testimonial about the camp" name = "quote"></textarea>

@@ -4,10 +4,10 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.views import generic
 from django.views.generic import View
-from .forms import UserForm
-from .models import Profile
+from .forms import UserForm, UserImageUpload
+from .models import Profile, Chat, Board
 from django.urls import reverse
-
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 
 # Create your views here.
 def index(request):
@@ -44,7 +44,6 @@ def people(request):
 		url = request.POST['url']
 		quote = request.POST['quote']
 		session = request.POST['session']
-
 		profile = Profile(name = name, school = school, url = url, specialty = specialty, github = github, quote = quote, session = session)
 		profile.save()
 
@@ -54,8 +53,40 @@ def people(request):
 
 		return render(request, 'people.html', {'w2017':w2017, 's2017': s2017, 'w2016':w2016})
 
+
+def board(request):
+	if request.method == "POST":
+		form = UserImageUpload(request.POST, request.FILES)
+		if form.is_valid():
+			form.save()
+			b = Board.objects.all()
+			return render(request, 'board.html', {'form': form,'board':b})
+	else:	
+		form = UserImageUpload()
+		b = Board.objects.all()
+		return render(request, 'board.html', {'form':form,'board':b})
+
+
+#chat = home 
+#rest is same
 def chat(request):
-	return render(request, 'chat.html')
+	c = Chat.objects.all()
+	return render(request, "chat.html", {'home':'active', 'chat':c})
+
+def post(request):
+	if request.method == "POST":
+		msg = request.POST.get('msgbox',None)
+		c = Chat(user = request.user, message = msg)
+		if msg != '' or msg != None:
+			c.save()
+		return JsonResponse({'msg': msg, 'user': c.user.username})
+	else:
+		return HttpResponse('Request must be POST.')
+
+def messages(request):
+	c = Chat.objects.all()
+	return render(request, 'messages.html', {'chat':c})
+
 
 def gallery(request):
 	return render(request, 'gallery.html')

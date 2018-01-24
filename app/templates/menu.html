@@ -36,6 +36,13 @@
 							<span class = "glyphicon glyphicon-picture" aria-hidden = "true"></span>&nbsp; Gallery
 						</a>
 					</li>
+
+					<!-- Item 4 -->
+					<li class = "{% if active_tab == 'D' %}active{% endif %}">
+						<a href = "{% url 'board' %}">
+							<span class = "glyphicon glyphicon-picture" aria-hidden = "true"></span>&nbsp; Board
+						</a>
+					</li>
 					
 				</ul>
 				{% if not user.is_authenticated %}

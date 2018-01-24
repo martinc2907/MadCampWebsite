@@ -4,7 +4,58 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<script type="text/javascript" src="{% static 'app/jquery-3.3.1.js' %}"></script> 
+
+
+{% include "menu.html" with active_tab='B' %}
+
+
+<head>
+    <title>Chat Panel</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" type = "text/css" href="{% static 'app/style.css' %}">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
 
 <body>
-{% include "menu.html" with active_tab='B' %}
+    <div id="chat-body" class="panel panel-default" style = "margin-top:52px; ">
+        <div class="panel-heading">Chat Room</div>
+        <div id="msg-list-div" class="panel-body" style= "padding-bottom:0px">
+            <ul id="msg-list" class="list-group" style= "padding-bottom:0px">
+                {% for obj in chat %}
+                    {% if obj.user == request.user %}
+                        <li class="text-right list-group-item" style= "background-color: antiquewhite"><span style = "color:#CD5360">{{obj.user.username}}: </span> <span style = "color:black">{{ obj.message }}</span></li>
+                    {% else %}
+						<li class="text-left list-group-item" style= "background-color: antiquewhite"><span style = "color:#CD5360">{{obj.user.username}}: </span> <span style = "color:black">{{ obj.message }}</span></li>  
+                  {% endif %}
+                {% empty %}
+                    <li class="text-right list-group-item" style= "background-color: antiquewhite">No messages yet!</li>
+                {% endfor %}
+                <script>
+                    var chatlist = document.getElementById('msg-list-div');
+                    chatlist.scrollTop = chatlist.scrollHeight;
+                </script>
+            </ul>
+        </div>
+    </div>
+
+    <form id="chat-form" method="post">{% csrf_token %}
+        <div id="chat-bottom" class="input-group">
+            <input type="text" id="chat-msg" name="chat-msg" class="form-control"/>
+            <input type="text" name = "username" value = "{{ user.username }}" style = "display: none"/>
+            <span class="input-group-btn">
+                <input class="btn btn-default" id="send" type="submit" value="Send"/>
+            </span>
+        </div>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="{% static 'app/chat.js' %}"></script>
 </body>
+
+

@@ -1,0 +1,90 @@
+{% load static %}
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<script type="text/javascript" src="{% static 'app/jquery-3.3.1.js' %}"></script> 
+
+{% include "menu.html" with active_tab='D' %}
+
+<!-- Modal Form Part -->
+<button class = "profile_button" onclick = "document.getElementById('id1').style.display='block'">Add Post</button>
+
+<div id = "id1" class = "modal ">
+	<form style="width:30%; margin: 5% auto 15% auto;" method = "post" enctype = "multipart/form-data">{% csrf_token %}
+		<div class = "modal_container">
+			{{form}}
+			<button type = "submit" style = "margin-top:10px">Submit</button>
+		</div>
+  	</form>
+ </div>
+
+
+ <script>
+	var modal = document.getElementById('id1');
+	window.onclick = function(event){
+		if(event.target == modal){
+			modal.style.display= 'none';}
+	}
+</script>
+<!-- End Modal Form Part -->
+
+
+{% if board is not None %}
+	{% for b in board %}
+		{% if forloop.counter == 1 %}
+			<div class = "board-card" style = "margin-top: 0px">
+					<img class = "board-image" src = {{b.file.url}} >
+					<div class = "board-header">
+						<h1>{{b.header}}</h1>
+					</div>
+
+					<div class = "board-content">
+						<p>{{b.content}}</p>
+					</div>
+			</div>
+		{% endif %}
+
+		{% if forloop.counter != 1 %}
+			<div class = "board-card">
+					<img class = "board-image" src = {{b.file.url}} >
+					<div class = "board-header">
+						<h1>{{b.header}}</h1>
+					</div>
+
+					<div class = "board-content">
+						<p>{{b.content}}</p>
+					</div>
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
+
+<!-- <div class = "board-card">
+	<img class = "board-image" src = "http://mblogthumb3.phinf.naver.net/MjAxNzExMTZfODgg/MDAxNTEwODA4NjY1ODQz.i-fX1tofrRnkTY87GKaXNMQEZxNpLTeCkXBsGHDXWhcg.FV_5JT3IgrVJ5Y0ZErWAaPlt8jqt_ifJEhvstDMGdhgg.JPEG.lovelyse80/%EB%8A%90%EB%82%8C%EC%9E%88%EB%8A%94%EA%B3%A0%ED%99%94%EC%A7%88%EB%B0%B0%EA%B2%BD%ED%99%94%EB%A9%B4%EC%98%88%EC%81%9C%ED%92%8D%EA%B2%BD%EB%B6%84%EC%9C%84%EA%B8%B0%EC%9E%88%EB%8A%94%EC%BB%B4%ED%93%A8%ED%84%B0%EA%B0%90%EC%84%B1%EC%82%AC%EC%A7%8419.jpg?type=w2">
+
+	<div class = "board-header">
+		<h1>Test Header</h1>
+	</div>
+
+	<div class = "board-content">
+		<p>Test paragraph</p>
+	</div>
+</div>
+
+
+<div class = "board-card">
+
+	<img class = "board-image" src = "https://cdn-images-1.medium.com/max/1600/1*ks04m_dhreHcLargmim5EA.jpeg">
+
+	<div class = "board-header">
+		<h1>Interesting Read- Modern Web Development</h1>
+	</div>
+
+	<div class = "board-content">
+		<p>Interesting read covering the development of modern web development practices and conventions. Check it out!
+		https://hackernoon.com/modern-web-development-bf0b2ef0e22e</p>
+	</div>
+</div> -->
